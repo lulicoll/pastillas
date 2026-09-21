@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F4F6F4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Mis pastillas">
+<style>
+  :root{
+    color-scheme:light dark;
+    padding-top:env(safe-area-inset-top, 0px);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+  }
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Mis pastillas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ground:#F4F6F4;
+    --surface:#FFFFFF;
+    --surface-2:#EAEFEC;
+    --ink:#1B2A2E;
+    --ink-2:#4A5A5C;
+    --ink-3:#7C8A8A;
+    --line:#D8E0DC;
+    --accent:#0E6B6B;
+    --accent-ink:#FFFFFF;
+    --accent-soft:#DCEAE7;
+    --taken:#2E7D5B;
+    --taken-soft:#E2F0E8;
+    --taken-line:#A9CFBC;
+    --check-ink:#FFFFFF;
+    --alert:#B5751F;
+    --alert-soft:#F6ECDA;
+    --shadow:0 1px 2px rgba(27,42,46,.06), 0 4px 14px rgba(27,42,46,.05);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#131919;
+      --surface:#1B2323;
+      --surface-2:#232D2D;
+      --ink:#E9EDEA;
+      --ink-2:#AFBCB8;
+      --ink-3:#849491;
+      --line:#2E3A39;
+      --accent:#4FB3AD;
+      --accent-ink:#0B1414;
+      --accent-soft:#1E3230;
+      --taken:#5FBF8E;
+      --taken-soft:#1A2D24;
+      --taken-line:#2F5A45;
+      --check-ink:#0B1414;
+      --alert:#D79B47;
+      --alert-soft:#2E2618;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#131919;
+    --surface:#1B2323;
+    --surface-2:#232D2D;
+    --ink:#E9EDEA;
+    --ink-2:#AFBCB8;
+    --ink-3:#849491;
+    --line:#2E3A39;
+    --accent:#4FB3AD;
+    --accent-ink:#0B1414;
+    --accent-soft:#1E3230;
+    --taken:#5FBF8E;
+    --taken-soft:#1A2D24;
+    --taken-line:#2F5A45;
+    --check-ink:#0B1414;
+    --alert:#D79B47;
+    --alert-soft:#2E2618;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Public Sans","Helvetica Neue",Arial,sans-serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:20px 48px}
+
+  /* ---------- header ---------- */
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .mhright{display:flex;align-items:center;gap:10px}
+  .soundbtn{
+    appearance:none;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink-3);width:32px;height:32px;border-radius:50%;flex:none;
+    display:grid;place-items:center;cursor:pointer;padding:0;
+    transition:color .15s ease,border-color .15s ease;
+  }
+  .soundbtn svg{width:19px;height:19px}
+  .soundbtn[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+  .soundbtn[aria-pressed="true"] .slash{display:none}
+  .soundbtn[aria-pressed="false"] .wave{display:none}
+  .soundbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .mark{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:"Public Sans",sans-serif;font-size:12px;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+  }
+  .bug{
+    font-size:17px;line-height:1;letter-spacing:normal;
+    font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+    transform-origin:50% 60%;
+  }
+  .bug.hit{animation:tambaleo .75s cubic-bezier(.36,.07,.19,.97)}
+  @keyframes tambaleo{
+    0%{transform:rotate(0) scale(1)}
+    15%{transform:rotate(-17deg) scale(1.18)}
+    32%{transform:rotate(14deg) scale(1.14)}
+    48%{transform:rotate(-11deg) scale(1.1)}
+    64%{transform:rotate(7deg) scale(1.05)}
+    80%{transform:rotate(-4deg) scale(1.02)}
+    100%{transform:rotate(0) scale(1)}
+  }
+  .phase{font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--surface-2);
+    border-radius:12px;padding:4px;margin-bottom:22px}
+  .tab{
+    appearance:none;border:0;background:transparent;color:var(--ink-2);
+    font-family:inherit;font-size:15px;font-weight:600;padding:11px 8px;border-radius:9px;
+    cursor:pointer;transition:background .15s ease,color .15s ease;
+  }
+  .tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+  .tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- day head ---------- */
+  .dayhead{margin-bottom:6px}
+  .daydate{
+    font-family:"Newsreader",Georgia,serif;font-size:29px;line-height:1.15;font-weight:500;
+    margin:0;text-wrap:balance;
+  }
+  .daymeta{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    margin-top:7px;font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums;
+  }
+  .counter{font-weight:600;color:var(--ink)}
+  .dot{width:3px;height:3px;border-radius:50%;background:var(--ink-3);flex:none}
+
+  .track{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin:16px 0 4px}
+  .track > i{display:block;height:100%;background:var(--accent);border-radius:99px;
+    transition:width .35s ease}
+  .tracklabel{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;margin-bottom:22px}
+
+  /* ---------- notices ---------- */
+  .notice{
+    background:var(--accent-soft);color:var(--ink);border-radius:var(--radius);
+    padding:13px 15px;font-size:14.5px;margin-bottom:20px;line-height:1.45;
+  }
+  .notice b{font-weight:600}
+  .notice.past{background:var(--alert-soft)}
+  .notice .back{
+    appearance:none;border:0;background:transparent;padding:0;margin-top:6px;display:block;
+    font-family:inherit;font-size:14.5px;font-weight:600;color:var(--accent);
+    text-decoration:underline;text-underline-offset:3px;cursor:pointer;
+  }
+  .notice .back:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- dose cards ---------- */
+  .doses{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+  .dose{
+    appearance:none;
+    display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:15px 16px;min-height:78px;cursor:pointer;font-family:inherit;color:var(--ink);
+    box-shadow:var(--shadow);transition:background .18s ease,border-color .18s ease;
+  }
+  .dose:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .dose[aria-pressed="true"]{background:var(--taken-soft);border-color:var(--taken-line)}
+  .dose[disabled]{cursor:default;opacity:.5;box-shadow:none}
+  .dose .body{flex:1;min-width:0;display:block}
+  .dose .when,.dose .drug,.dose .amount{display:block}
+  .dose .when{
+    font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:3px;
+  }
+  .dose[aria-pressed="true"] .when{color:var(--taken)}
+  .dose .drug{font-size:21px;font-weight:600;line-height:1.2;letter-spacing:-.01em}
+  .dose .amount{font-size:14.5px;color:var(--ink-2);margin-top:2px;font-variant-numeric:tabular-nums}
+  .check{
+    position:relative;flex:none;width:34px;height:34px;border-radius:50%;
+    border:2px solid var(--line);display:grid;place-items:center;color:var(--check-ink);
+    transition:border-color .22s ease;
+  }
+  .dose[aria-pressed="true"] .check{border-color:var(--taken)}
+
+  /* el relleno crece desde el centro, con un rebote corto */
+  .check::before{
+    content:"";position:absolute;inset:-2px;border-radius:50%;background:var(--taken);
+    transform:scale(0);opacity:0;
+    transition:transform .34s cubic-bezier(.34,1.45,.5,1), opacity .18s ease;
+  }
+  .dose[aria-pressed="true"] .check::before{transform:scale(1);opacity:1}
+
+  /* el anillo que se expande: sólo en el toque real, nunca al cargar */
+  .check::after{
+    content:"";position:absolute;inset:-2px;border-radius:50%;
+    border:2px solid var(--taken);opacity:0;pointer-events:none;
+  }
+  .dose.pop .check::after{animation:ring .6s ease-out}
+
+  /* el tilde se dibuja: 18 es el largo del trazo del path */
+  .check svg{position:relative;z-index:1;width:18px;height:18px}
+  .check svg path{
+    stroke-dasharray:18;stroke-dashoffset:18;
+    transition:stroke-dashoffset .28s cubic-bezier(.65,0,.35,1) .05s;
+  }
+  .dose[aria-pressed="true"] .check svg path{stroke-dashoffset:0}
+  /* al abrir el día las marcas ya hechas entran escalonadas */
+  .doses.enter .dose[aria-pressed="true"] .check svg path{
+    transition-delay:calc(.08s + var(--i,0) * .07s);
+  }
+  .doses.enter .dose[aria-pressed="true"] .check::before{
+    transition-delay:calc(.04s + var(--i,0) * .07s);
+  }
+
+  .dose.pop{animation:nudge .42s cubic-bezier(.34,1.3,.5,1)}
+
+  @keyframes ring{
+    from{transform:scale(1);opacity:.5}
+    to{transform:scale(1.95);opacity:0}
+  }
+  @keyframes nudge{
+    0%{transform:scale(1)} 38%{transform:scale(1.018)} 100%{transform:scale(1)}
+  }
+  @keyframes chipin{
+    from{transform:scale(.72);opacity:0} to{transform:scale(1);opacity:1}
+  }
+
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--taken-soft);color:var(--taken);border:1px solid var(--taken-line);
+    font-size:12.5px;font-weight:700;letter-spacing:.03em;
+    padding:3px 11px;border-radius:99px;
+  }
+  .chip.in{animation:chipin .45s cubic-bezier(.34,1.35,.5,1)}
+  .chip svg{width:12px;height:12px}
+
+  /* ---------- calendar ---------- */
+  .weekdays{
+    display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:6px;
+    font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-3);text-align:center;
+  }
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .cell{aspect-ratio:1/1.05;border-radius:10px;border:1px solid transparent;background:transparent}
+  button.cell{
+    appearance:none;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+    font-family:inherit;color:var(--ink-2);cursor:pointer;padding:0;
+    background:var(--surface);border-color:var(--line);
+    font-variant-numeric:tabular-nums;
+  }
+  button.cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  button.cell .n{font-size:14px;font-weight:600;line-height:1}
+  button.cell[data-state="full"]{background:var(--taken-soft);border-color:var(--taken-line);color:var(--taken)}
+  button.cell[data-state="miss"]{background:var(--alert-soft);border-color:var(--alert)}
+  button.cell[data-state="future"]{background:transparent;border-style:dashed;color:var(--ink-3);cursor:default;opacity:.65}
+  button.cell[data-today="1"]{box-shadow:inset 0 0 0 2px var(--accent)}
+  .pips{display:flex;gap:2.5px}
+  .pips i{width:5px;height:5px;border-radius:1.5px;background:var(--line);display:block}
+  .pips i.on{background:var(--taken)}
+  button.cell[data-state="future"] .pips i{background:var(--line)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:16px;font-size:13px;color:var(--ink-2)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .swatch{width:13px;height:13px;border-radius:4px;border:1px solid var(--line);flex:none}
+  .swatch.full{background:var(--taken-soft);border-color:var(--taken-line)}
+  .swatch.miss{background:var(--alert-soft);border-color:var(--alert)}
+  .swatch.future{border-style:dashed;background:transparent}
+
+  /* ---------- summary ---------- */
+  .section{margin-top:30px;padding-top:26px;border-top:1px solid var(--line)}
+  .h2{font-family:"Newsreader",Georgia,serif;font-size:21px;font-weight:500;margin:0 0 4px}
+  .sub{font-size:14px;color:var(--ink-2);margin:0 0 14px}
+  .btn{
+    appearance:none;font-family:inherit;font-size:16px;font-weight:600;
+    padding:13px 18px;border-radius:11px;cursor:pointer;border:1px solid var(--accent);
+    background:var(--accent);color:var(--accent-ink);
+  }
+  .btn.ghost{background:transparent;color:var(--accent)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btnrow{display:flex;gap:9px;flex-wrap:wrap}
+  .summary{
+    margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:15px;font-size:14.5px;line-height:1.6;white-space:pre-wrap;
+    font-variant-numeric:tabular-nums;
+  }
+  .hint{font-size:13px;color:var(--ink-3);margin-top:9px}
+
+  details{margin-top:26px;border-top:1px solid var(--line);padding-top:20px}
+  summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--accent);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+ ";font-weight:700}
+  details[open] summary::before{content:"– "}
+  .rx{
+    margin-top:14px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px;font-size:14.5px;line-height:1.65;
+  }
+  .rx .rxhead{font-family:"Newsreader",Georgia,serif;font-size:16px;margin-bottom:10px;color:var(--ink-2)}
+  .rx ul{margin:0;padding-left:19px}
+  .rx li{margin-bottom:7px}
+  .rx li:last-child{margin-bottom:0}
+  .rx b{font-weight:600}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <div class="mark">Mis pastillas <span class="bug" id="bug" aria-hidden="true">🦠</span></div>
+    <div class="mhright">
+      <span class="phase">2 meses · 61 días</span>
+      <button class="soundbtn" id="soundbtn" type="button" aria-pressed="true"
+              aria-label="Sonido al marcar una toma">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 8h2.6L10 5.1v9.8L6.6 12H4V8z" fill="currentColor"/>
+          <path class="wave" d="M13 7.6a3.4 3.4 0 0 1 0 4.8" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round"/>
+          <path class="slash" d="M12.9 7.3l4.3 5.4" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tab-dia" role="tab" aria-selected="true" aria-controls="view-dia">Hoy</button>
+    <button class="tab" id="tab-cal" role="tab" aria-selected="false" aria-controls="view-cal">Calendario</button>
+  </div>
+
+  <!-- ============ VISTA DÍA ============ -->
+  <section id="view-dia" role="tabpanel" aria-labelledby="tab-dia">
+    <div id="notice-slot"></div>
+
+    <div class="dayhead">
+      <h1 class="daydate" id="daydate">—</h1>
+      <div class="daymeta">
+        <span id="daynum">—</span>
+        <span class="dot" aria-hidden="true"></span>
+        <span class="counter" id="daycount">—</span>
+        <span class="chip" id="donechip" hidden>
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9"
+            stroke="currentColor" stroke-width="2.8" stroke-linecap="round"
+            stroke-linejoin="round"/></svg>Día completo
+        </span>
+      </div>
+    </div>
+
+    <div class="doses" id="doses"></div>
+
+    <div class="track" aria-hidden="true"><i id="bar" style="width:0%"></i></div>
+    <div class="tracklabel" id="barlabel">—</div>
+
+    <div class="section">
+      <h2 class="h2">Contarle a alguien cómo va</h2>
+      <p class="sub">Arma un resumen para copiar y mandar por mensaje.</p>
+      <div class="btnrow">
+        <button class="btn" id="mk-summary">Armar el resumen</button>
+        <button class="btn ghost" id="cp-summary" hidden>Copiar</button>
+      </div>
+      <div class="summary" id="summary" hidden></div>
+      <div class="hint" id="cphint" hidden></div>
+    </div>
+
+    <details id="rx">
+      <summary>Ver la receta</summary>
+      <div class="rx">
+        <div class="rxhead">Grupo Médico Lomas de San Isidro — Rp./ 2 meses</div>
+        <ul>
+          <li><b>Rifampicina 300</b> — 2 cápsulas juntas en ayunas a la mañana</li>
+          <li><b>Isoniacida 300</b> — 1 comprimido con el desayuno</li>
+          <li><b>Pirazinamida 250</b> — 5 comprimidos con el almuerzo</li>
+          <li><b>Etambutol 400</b> — 2 comprimidos por día a la tarde</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ VISTA CALENDARIO ============ -->
+  <section id="view-cal" role="tabpanel" aria-labelledby="tab-cal" hidden>
+    <div class="dayhead" style="margin-bottom:18px">
+      <h1 class="daydate">Los 61 días</h1>
+      <div class="daymeta"><span id="calsummary">—</span></div>
+    </div>
+    <div class="weekdays" aria-hidden="true">
+      <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="legend">
+      <span><i class="swatch full"></i> Todo tomado</span>
+      <span><i class="swatch miss"></i> Faltó algo</span>
+      <span><i class="swatch future"></i> Todavía no</span>
+    </div>
+    <p class="hint" style="margin-top:14px">Tocá cualquier día ya pasado para corregir lo que marcaste.</p>
+  </section>
+</div>
+
+<!-- build de navegador: el de cdnjs es CommonJS y no define window.confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- datos del tratamiento ---------------- */
+  var START = "2026-09-23";
+  var TOTAL = 61;
+
+  var TOMAS = [
+    { id:"ayunas",   when:"En ayunas, a la mañana", drug:"Rifampicina 300", amount:"2 cápsulas juntas" },
+    { id:"desayuno", when:"Con el desayuno",        drug:"Isoniacida 300",  amount:"1 comprimido" },
+    { id:"almuerzo", when:"Con el almuerzo",        drug:"Pirazinamida 250",amount:"5 comprimidos" },
+    { id:"tarde",    when:"A la tarde",             drug:"Etambutol 400",   amount:"2 comprimidos" }
+  ];
+
+  var DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio",
+               "agosto","septiembre","octubre","noviembre","diciembre"];
+
+  /* ---------------- fechas (siempre en hora local) ---------------- */
+  function ymd(d){
+    return d.getFullYear() + "-" +
+      String(d.getMonth()+1).padStart(2,"0") + "-" +
+      String(d.getDate()).padStart(2,"0");
+  }
+  function parse(s){ var p = s.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function shift(s, n){ var d = parse(s); d.setDate(d.getDate()+n); return ymd(d); }
+  function idx(s){ return Math.round((parse(s) - parse(START)) / 86400000); }
+  function largo(s){ var d = parse(s); return DIAS[d.getDay()] + " " + d.getDate() + " de " + MESES[d.getMonth()]; }
+  function corto(s){ var d = parse(s); return d.getDate() + "/" + (d.getMonth()+1); }
+
+  var END = shift(START, TOTAL-1);
+  function hoy(){ return ymd(new Date()); }
+
+  /* ---------------- guardado local ---------------- */
+  var KEY = "pastillas-v1";
+  var state = {};
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) state = JSON.parse(raw) || {};
+  } catch(e){ state = {}; }
+
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+  }
+  /* Antes del día 1 la página queda en modo prueba: se puede tocar todo para ver
+     cómo funciona, pero nada de eso se guarda ni cuenta en el registro. */
+  var demo = {};
+  function esDemo(){ return idx(hoy()) < 0; }
+
+  function marks(date){ return state[date] || {}; }
+  function dayMarks(date){ return (esDemo() && date === START) ? demo : marks(date); }
+
+  function cuenta(m){
+    var n = 0;
+    for (var i=0;i<TOMAS.length;i++) if (m[TOMAS[i].id]) n++;
+    return n;
+  }
+  function taken(date){ return cuenta(marks(date)); }        /* el registro real */
+  function takenDay(date){ return cuenta(dayMarks(date)); }  /* lo que ve el día abierto */
+
+  function toggle(date, id){
+    if (esDemo() && date === START){
+      if (demo[id]) delete demo[id]; else demo[id] = 1;
+      return;                       /* prueba: no se guarda */
+    }
+    if (!state[date]) state[date] = {};
+    if (state[date][id]) delete state[date][id];
+    else state[date][id] = 1;
+    save();
+  }
+
+  /* ---------------- estado de la vista ---------------- */
+  var active = hoy();
+  if (idx(active) < 0) active = START;
+  if (idx(active) > TOTAL-1) active = END;
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------------- vista día ---------------- */
+  function renderDia(){
+    var today = hoy();
+    var i = idx(active);
+
+    $("daydate").textContent = largo(active).charAt(0).toUpperCase() + largo(active).slice(1);
+    $("daynum").textContent = "Día " + (i+1) + " de " + TOTAL;
+
+    /* aviso de contexto */
+    var slot = $("notice-slot");
+    slot.innerHTML = "";
+    if (idx(today) < 0){
+      slot.innerHTML = '<div class="notice">El tratamiento empieza el <b>' +
+        largo(START) + '</b>. Mientras tanto podés tocar las tomas para ver cómo funciona: ' +
+        'nada de lo que marques ahora queda guardado.</div>';
+    } else if (idx(today) > TOTAL-1){
+      slot.innerHTML = '<div class="notice"><b>Terminaron los 2 meses.</b> El último día fue el ' +
+        largo(END) + '.</div>';
+    } else if (active !== today){
+      var n = document.createElement("div");
+      n.className = "notice past";
+      n.innerHTML = 'Estás viendo el <b>' + largo(active) + '</b>, no el día de hoy.';
+      var b = document.createElement("button");
+      b.className = "back";
+      b.textContent = "Volver a hoy";
+      b.addEventListener("click", function(){ active = today; renderDia(); });
+      n.appendChild(b);
+      slot.appendChild(n);
+    }
+
+    /* las tarjetas se construyen una sola vez por día: si se rehicieran en cada
+       toque, la animación del tilde se dispararía en las cuatro a la vez */
+    if (builtFor !== active){ buildDoses(); builtFor = active; }
+    syncDoses();
+    meta(false);
+  }
+
+  var doseEls = {};
+  var builtFor = null;
+  var enterTimer = null;
+
+  function buildDoses(){
+    var box = $("doses");
+    box.innerHTML = "";
+    doseEls = {};
+
+    TOMAS.forEach(function(t, n){
+      var b = document.createElement("button");
+      b.className = "dose";
+      b.type = "button";
+      b.style.setProperty("--i", n);
+      b.innerHTML =
+        '<span class="body">' +
+          '<span class="when">' + t.when + '</span>' +
+          '<span class="drug">' + t.drug + '</span>' +
+          '<span class="amount">' + t.amount + '</span>' +
+        '</span>' +
+        '<span class="check" aria-hidden="true">' +
+          '<svg viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="currentColor" ' +
+          'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</span>';
+      b.addEventListener("click", function(){
+        if (b.disabled) return;
+        box.classList.remove("enter");   /* un toque temprano no debe esperar el escalonado */
+        var estaba = !!dayMarks(active)[t.id];
+        toggle(active, t.id);
+        b.setAttribute("aria-pressed", estaba ? "false" : "true");
+        if (estaba){
+          untick();
+        } else {
+          pop(b);
+          var van = takenDay(active);
+          if (van === TOMAS.length){ acorde(); confeti(); tambalear(); }
+          else { tick(van); }
+        }
+        meta(!estaba);
+        renderCal();
+      });
+      doseEls[t.id] = b;
+      box.appendChild(b);
+    });
+
+    /* al abrir un día, lo ya marcado entra escalonado; después el retardo molesta */
+    box.classList.add("enter");
+    clearTimeout(enterTimer);
+    enterTimer = setTimeout(function(){ box.classList.remove("enter"); }, 900);
+  }
+
+  /* ---------------- sonido ----------------
+     Se genera con Web Audio: sin archivos, no depende de ningún servidor.
+     El contexto se crea recién en el primer toque, que es lo que exige iOS. */
+  var SONIDO_KEY = "pastillas-sonido";
+  var sonido = true;
+  try {
+    var pref = localStorage.getItem(SONIDO_KEY);
+    if (pref === "0") sonido = false;
+  } catch(e){}
+
+  var AC = null;
+  function ctxAudio(){
+    if (AC) return AC;
+    var C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return null;
+    try { AC = new C(); } catch(e){ return null; }
+    return AC;
+  }
+
+  function tono(freq, dur, vol, retardo){
+    if (!sonido) return;
+    var ctx = ctxAudio();
+    if (!ctx) return;
+    if (ctx.state === "suspended") { try { ctx.resume(); } catch(e){} }
+    var t0 = ctx.currentTime + (retardo || 0);
+    var osc = ctx.createOscillator();
+    var g = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);   /* ataque corto */
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);  /* cola que se apaga */
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0 + dur + 0.03);
+  }
+
+  /* do - mi - sol - do: cada toma sube un escalón */
+  var ESCALA = [523.25, 659.25, 783.99, 1046.50];
+
+  function tick(n){
+    var f = ESCALA[Math.min(Math.max(n,1), 4) - 1];
+    tono(f, 0.30, 0.16);
+    tono(f * 2, 0.16, 0.045);   /* octava suave, le da timbre de campana */
+  }
+  function untick(){ tono(196, 0.16, 0.06); }
+
+  function acorde(){            /* al cerrar el día suena la escala entera */
+    ESCALA.forEach(function(f, i){
+      tono(f, 0.55, 0.13, i * 0.075);
+      tono(f * 2, 0.30, 0.032, i * 0.075);
+    });
+  }
+
+  function reducido(){
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function confeti(){
+    if (typeof window.confetti !== "function") return;   /* si el CDN no cargó, se sigue igual */
+    if (reducido()) return;
+    var colores = ["#0E6B6B", "#2E7D5B", "#B5751F", "#A9CFBC", "#DCEAE7"];
+    window.confetti({
+      particleCount: 70, spread: 62, startVelocity: 38, origin: { y: 0.74 },
+      colors: colores, scalar: 0.9, ticks: 170, disableForReducedMotion: true
+    });
+    setTimeout(function(){
+      window.confetti({
+        particleCount: 38, spread: 95, startVelocity: 30, origin: { y: 0.8 },
+        colors: colores, scalar: 0.72, ticks: 150, disableForReducedMotion: true
+      });
+    }, 150);
+  }
+
+  /* la bacteria se tambalea al cerrar el día */
+  var bugTimer = null;
+  function tambalear(){
+    var b = $("bug");
+    if (!b || reducido()) return;
+    b.classList.remove("hit");
+    void b.offsetWidth;
+    b.classList.add("hit");
+    clearTimeout(bugTimer);
+    bugTimer = setTimeout(function(){ b.classList.remove("hit"); }, 850);
+  }
+
+  function pintarSonido(){
+    var b = $("soundbtn");
+    b.setAttribute("aria-pressed", sonido ? "true" : "false");
+    b.setAttribute("aria-label", sonido ? "Silenciar" : "Activar el sonido");
+  }
+  $("soundbtn").addEventListener("click", function(){
+    sonido = !sonido;
+    try { localStorage.setItem(SONIDO_KEY, sonido ? "1" : "0"); } catch(e){}
+    pintarSonido();
+    if (sonido) tick(3);         /* una muestra al volver a encenderlo */
+  });
+  pintarSonido();
+
+  function pop(el){
+    el.classList.remove("pop");
+    void el.offsetWidth;            /* fuerza el reflow para poder repetir la animación */
+    el.classList.add("pop");
+    clearTimeout(el._pop);
+    el._pop = setTimeout(function(){ el.classList.remove("pop"); }, 700);
+  }
+
+  function syncDoses(){
+    var bloqueado = idx(active) > idx(hoy()) && !(esDemo() && active === START);
+    TOMAS.forEach(function(t){
+      var b = doseEls[t.id];
+      if (!b) return;
+      b.setAttribute("aria-pressed", dayMarks(active)[t.id] ? "true" : "false");
+      b.disabled = bloqueado;
+    });
+  }
+
+  /* contador del día, chip de día completo y barra del tratamiento */
+  function meta(animar){
+    var n = takenDay(active);
+    var full = n === TOMAS.length;
+    $("daycount").textContent = n + " de 4 tomas";
+
+    var chip = $("donechip");
+    if (full){
+      var era = chip.hidden;
+      chip.hidden = false;
+      if (animar && era){
+        chip.classList.remove("in");
+        void chip.offsetWidth;
+        chip.classList.add("in");
+      }
+    } else {
+      chip.hidden = true;
+      chip.classList.remove("in");
+    }
+
+    var done = 0;
+    for (var k=0;k<TOTAL;k++) if (taken(shift(START,k)) === TOMAS.length) done++;
+    $("bar").style.width = Math.round(done / TOTAL * 100) + "%";
+    $("barlabel").textContent = done + " de " + TOTAL + " días completos · termina el " + largo(END);
+  }
+
+  /* ---------------- vista calendario ---------------- */
+  function estado(date){
+    var today = hoy();
+    if (idx(date) > idx(today)) return "future";
+    if (taken(date) === TOMAS.length) return "full";
+    /* el día en curso todavía no "falta": queda neutro hasta que pase */
+    return date === today ? "open" : "miss";
+  }
+
+  function renderCal(){
+    var grid = $("grid");
+    grid.innerHTML = "";
+    var today = hoy();
+
+    /* huecos hasta el primer día, con la semana arrancando en lunes */
+    var startDow = parse(START).getDay();      // 0 dom … 6 sáb
+    var lead = (startDow + 6) % 7;             // 0 lun … 6 dom
+    for (var h=0; h<lead; h++){
+      var gap = document.createElement("div");
+      gap.className = "cell";
+      grid.appendChild(gap);
+    }
+
+    for (var k=0; k<TOTAL; k++){
+      (function(k){
+        var date = shift(START, k);
+        var st = estado(date);
+        var b = document.createElement("button");
+        b.className = "cell";
+        b.type = "button";
+        b.dataset.state = st;
+        if (date === today) b.dataset.today = "1";
+        b.setAttribute("aria-label", largo(date) + " — " + taken(date) + " de 4 tomas");
+        if (st === "future") b.disabled = true;
+
+        var n = document.createElement("span");
+        n.className = "n";
+        n.textContent = parse(date).getDate();
+        b.appendChild(n);
+
+        var pips = document.createElement("span");
+        pips.className = "pips";
+        for (var j=0;j<TOMAS.length;j++){
+          var p = document.createElement("i");
+          if (marks(date)[TOMAS[j].id]) p.className = "on";
+          pips.appendChild(p);
+        }
+        b.appendChild(pips);
+
+        b.addEventListener("click", function(){
+          active = date;
+          show("dia");
+        });
+        grid.appendChild(b);
+      })(k);
+    }
+
+    var done = 0, missed = 0;
+    for (var m=0;m<TOTAL;m++){
+      var d = shift(START,m);
+      if (idx(d) > idx(today)) continue;
+      if (taken(d) === TOMAS.length) done++; else if (d !== today) missed++;
+    }
+    $("calsummary").textContent = done + " días completos" +
+      (missed ? " · " + missed + (missed === 1 ? " día con algo sin marcar" : " días con algo sin marcar") : "");
+  }
+
+  /* ---------------- resumen para compartir ---------------- */
+  function armarResumen(){
+    var today = hoy();
+    var lines = [];
+    var i = idx(today);
+
+    if (i < 0){
+      lines.push("El tratamiento todavía no empezó. Arranca el " + largo(START) + ".");
+      return lines.join("\n");
+    }
+    var day = Math.min(i, TOTAL-1);
+    lines.push("Pastillas — día " + (day+1) + " de " + TOTAL + " (" + largo(shift(START, day)) + ")");
+    lines.push("Hoy: " + taken(today) + " de 4 tomas" + (taken(today) === 4 ? " ✓" : ""));
+    lines.push("");
+
+    /* los últimos 7 días cerrados */
+    var completos = 0, pendientes = [];
+    for (var k=1; k<=7; k++){
+      var d = shift(today, -k);
+      if (idx(d) < 0) continue;
+      if (taken(d) === TOMAS.length){ completos++; continue; }
+      var faltan = TOMAS.filter(function(t){ return !marks(d)[t.id]; })
+                        .map(function(t){ return t.drug.replace(/ \d+$/, ""); });
+      pendientes.push("  " + corto(d) + " — faltó " + faltan.join(", "));
+    }
+    lines.push("Últimos 7 días: " + completos + " completos" +
+      (pendientes.length ? ", " + pendientes.length + " con algo sin marcar" : ""));
+    if (pendientes.length) lines = lines.concat(pendientes);
+
+    var done = 0;
+    for (var m=0;m<TOTAL;m++) if (taken(shift(START,m)) === TOMAS.length) done++;
+    lines.push("");
+    lines.push("En total: " + done + " de " + TOTAL + " días completos.");
+    return lines.join("\n");
+  }
+
+  $("mk-summary").addEventListener("click", function(){
+    var txt = armarResumen();
+    var el = $("summary");
+    el.textContent = txt;
+    el.hidden = false;
+    $("cp-summary").hidden = false;
+    $("cphint").hidden = true;
+  });
+
+  $("cp-summary").addEventListener("click", function(){
+    var txt = $("summary").textContent;
+    var hint = $("cphint");
+    function manual(){
+      hint.textContent = "Mantené el dedo apretado sobre el texto para seleccionarlo y copiarlo.";
+      hint.hidden = false;
+      try {
+        var r = document.createRange();
+        r.selectNodeContents($("summary"));
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+      } catch(e){}
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){
+        hint.textContent = "Copiado. Ya lo podés pegar en un mensaje.";
+        hint.hidden = false;
+      }, manual);
+    } else manual();
+  });
+
+  /* ---------------- pestañas ---------------- */
+  function show(which){
+    var dia = which === "dia";
+    $("view-dia").hidden = !dia;
+    $("view-cal").hidden = dia;
+    $("tab-dia").setAttribute("aria-selected", dia ? "true" : "false");
+    $("tab-cal").setAttribute("aria-selected", dia ? "false" : "true");
+    if (dia) renderDia(); else renderCal();
+    window.scrollTo(0,0);
+  }
+  $("tab-dia").addEventListener("click", function(){ active = hoy();
+    if (idx(active) < 0) active = START;
+    if (idx(active) > TOTAL-1) active = END;
+    show("dia");
+  });
+  $("tab-cal").addEventListener("click", function(){ show("cal"); });
+
+  /* si el teléfono queda abierto y cambia el día, refrescar al volver */
+  /* Si la página queda abierta y cruza la medianoche, "hoy" cambia debajo.
+     Sin esto, a la mañana siguiente abría mostrando el día anterior con el
+     cartel de "estás viendo un día pasado", y había que tocar "Volver a hoy". */
+  var ultimoHoy = hoy();
+  function revisarCambioDeDia(){
+    var ahora = hoy();
+    if (ahora !== ultimoHoy){
+      /* si estaba parada en el día de ayer, la llevamos al nuevo;
+         si estaba mirando un día viejo a propósito, la dejamos ahí */
+      if (active === ultimoHoy){
+        active = ahora;
+        if (idx(active) < 0) active = START;
+        if (idx(active) > TOTAL-1) active = END;
+      }
+      ultimoHoy = ahora;
+    }
+    if (!$("view-dia").hidden) renderDia();
+    renderCal();
+  }
+
+  document.addEventListener("visibilitychange", function(){
+    if (!document.hidden) revisarCambioDeDia();
+  });
+  setInterval(revisarCambioDeDia, 60000);   /* por si está abierta justo a las 12 */
+
+  renderDia();
+  renderCal();
+})();
+</script>
+</body>
+</html>

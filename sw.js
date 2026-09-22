@@ -1,6 +1,6 @@
 /* Hace que la app abra sin internet. Estrategia: primero la red (para que
    los cambios lleguen solos), y si no hay, lo guardado. */
-const CACHE = 'pastillas-v1';
+const CACHE = 'pastillas-v2';
 const ARCHIVOS = [
   './', './index.html', './manifest.json',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png'
